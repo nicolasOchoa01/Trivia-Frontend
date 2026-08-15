@@ -1,0 +1,8 @@
+{
+    "id": "123",
+    "timer": true,
+    "seconds": 25,
+    "multipleChoice": true,
+    "random": false,
+    "category": "geografia"
+}

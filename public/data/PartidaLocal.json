@@ -1,0 +1,133 @@
+{
+  "id": "partida-geografia-001",
+  "config": {
+      "id": "123",
+      "timer": true,
+      "seconds": 25,
+      "multipleChoice": true,
+      "random": false,
+      "category": "geografia"
+  },
+  "questions": [
+    {
+      "id": "q-1",
+      "question": "¿Cuál es la capital de Argentina?",
+      "options": ["Buenos Aires", "Córdoba", "Rosario", "Mendoza"],
+      "answer": "Buenos Aires"
+    },
+    {
+      "id": "q-2",
+      "question": "¿Cuál es la capital de Francia?",
+      "options": ["Lyon", "Marsella", "París", "Toulouse"],
+      "answer": "París"
+    },
+    {
+      "id": "q-3",
+      "question": "¿Cuál es la capital de Japón?",
+      "options": ["Osaka", "Kioto", "Tokio", "Yokohama"],
+      "answer": "Tokio"
+    },
+    {
+      "id": "q-4",
+      "question": "¿Cuál es la capital de Australia?",
+      "options": ["Sídney", "Melbourne", "Canberra", "Brisbane"],
+      "answer": "Canberra"
+    },
+    {
+      "id": "q-5",
+      "question": "¿Cuál es la capital de Brasil?",
+      "options": ["Río de Janeiro", "São Paulo", "Brasilia", "Salvador de Bahía"],
+      "answer": "Brasilia"
+    },
+    {
+      "id": "q-6",
+      "question": "¿Cuál es la capital de Canadá?",
+      "options": ["Toronto", "Ottawa", "Vancouver", "Montreal"],
+      "answer": "Ottawa"
+    },
+    {
+      "id": "q-7",
+      "question": "¿Cuál es la capital de España?",
+      "options": ["Barcelona", "Valencia", "Sevilla", "Madrid"],
+      "answer": "Madrid"
+    },
+    {
+      "id": "q-8",
+      "question": "¿Cuál es la capital de Egipto?",
+      "options": ["Alejandría", "El Cairo", "Giza", "Lúxor"],
+      "answer": "El Cairo"
+    },
+    {
+      "id": "q-9",
+      "question": "¿Cuál es la capital de Alemania?",
+      "options": ["Múnich", "Fráncfort", "Berlín", "Hamburgo"],
+      "answer": "Berlín"
+    },
+    {
+      "id": "q-10",
+      "question": "¿Cuál es la capital de Italia?",
+      "options": ["Milán", "Nápoles", "Roma", "Florencia"],
+      "answer": "Roma"
+    },
+    {
+      "id": "q-11",
+      "question": "¿Cuál es la capital de Colombia?",
+      "options": ["Medellín", "Cali", "Bogotá", "Cartagena"],
+      "answer": "Bogotá"
+    },
+    {
+      "id": "q-12",
+      "question": "¿Cuál es la capital de México?",
+      "options": ["Guadalajara", "Ciudad de México", "Monterrey", "Puebla"],
+      "answer": "Ciudad de México"
+    },
+    {
+      "id": "q-13",
+      "question": "¿Cuál es la capital de Sudáfrica?",
+      "options": ["Pretoria", "Ciudad del Cabo", "Johannesburgo", "Durban"],
+      "answer": "Pretoria"
+    },
+    {
+      "id": "q-14",
+      "question": "¿Cuál es la capital de Corea del Sur?",
+      "options": ["Busán", "Incheon", "Seúl", "Daegu"],
+      "answer": "Seúl"
+    },
+    {
+      "id": "q-15",
+      "question": "¿Cuál es la capital de Noruega?",
+      "options": ["Bergen", "Oslo", "Trondheim", "Stavanger"],
+      "answer": "Oslo"
+    },
+    {
+      "id": "q-16",
+      "question": "¿Cuál es la capital de Turquía?",
+      "options": ["Estambul", "Ankara", "Izmir", "Antalya"],
+      "answer": "Ankara"
+    },
+    {
+      "id": "q-17",
+      "question": "¿Cuál es la capital de Perú?",
+      "options": ["Cusco", "Arequipa", "Trujillo", "Lima"],
+      "answer": "Lima"
+    },
+    {
+      "id": "q-18",
+      "question": "¿Cuál es la capital de India?",
+      "options": ["Nueva Delhi", "Bombay", "Bangalore", "Calcuta"],
+      "answer": "Nueva Delhi"
+    },
+    {
+      "id": "q-19",
+      "question": "¿Cuál es la capital de Grecia?",
+      "options": ["Tesalónica", "Atenas", "Patras", "Heraclión"],
+      "answer": "Atenas"
+    },
+    {
+      "id": "q-20",
+      "question": "¿Cuál es la capital de Chile?",
+      "options": ["Valparaíso", "Concepción", "Santiago", "Antofagasta"],
+      "answer": "Santiago"
+    }
+  ]
+}

@@ -22,5 +22,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "public/data/ConfigLocal.json", "public/data/HistoryLocal.json", "public/data/PartidaLocal.json", "public/data/UserLocal.json"]
 }
