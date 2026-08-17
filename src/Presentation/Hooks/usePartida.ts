@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDependencies } from "../context/AppContext";
+import { useDependencies } from "./useDependencies";
 import type { IPartidaObserver } from "../../application/interfaces/IPartidaObserver";
 import type { IPartidaState } from "../../application/interfaces/IPartidaState";
 import type { Config } from "../../domain/entities/Config";
