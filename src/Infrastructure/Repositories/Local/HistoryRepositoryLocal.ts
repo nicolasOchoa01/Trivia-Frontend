@@ -5,7 +5,7 @@ import historyJson from "../../../../public/data/HistoryLocal.json"
 export class HistoryRepositoryLocal implements IHistoryRepository {
     async getHistoryByName(name: string): Promise<History> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-
+        console.log(name);
         const history = historyJson as unknown as History;
         return history;
     }

@@ -1,6 +1,5 @@
 import { type Config } from "../../domain/entities/Config";
 import { type Partida } from "../../domain/entities/Partida";
-import type { Question } from "../../domain/entities/Question";
 import { type IPartidaObserver } from './IPartidaObserver'
 
 export interface IPartidaService {

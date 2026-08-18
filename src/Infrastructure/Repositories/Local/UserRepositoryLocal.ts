@@ -6,13 +6,13 @@ import userJson from "../../../../public/data/UserLocal.json"
 export class UserRepositoryLocal implements IUserRepository {
     async getUserById(id: string): Promise<User> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-
+        console.log(id);
         const user = userJson as unknown as User;
         return user;
     }
     async getUserByName(name: string): Promise<User> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-
+        console.log(name);
         const user = userJson as unknown as User;
         return user;
     }
