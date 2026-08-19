@@ -6,21 +6,22 @@ import { ConfigPage } from '../pages/config/ConfigPage';
 import { HomePage } from '../pages/home/HomePage';
 import { HistoryPage } from '../pages/history/HistoryPage';
 import { LayoutComponent } from '../components/layout/LayoutComponent';
+import { AuthGuardian } from '../context/AuthGuardian';
 
 export function AppRouter() {
     return (
         <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-
-            <Route element={<LayoutComponent />}>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/config" element={<ConfigPage />} />
-                <Route path="/partida" element={<PartidaPage />} />
-                <Route path="/history" element={<HistoryPage />} />
-            </Route>
             
-
+            <Route element={<AuthGuardian />}>
+                <Route element={<LayoutComponent />}>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/config" element={<ConfigPage />} />
+                    <Route path="/partida" element={<PartidaPage />} />
+                    <Route path="/history" element={<HistoryPage />} />
+                </Route>
+            </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
     );

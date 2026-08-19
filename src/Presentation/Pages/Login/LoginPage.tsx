@@ -1,9 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { useEffect, useState } from 'react';
 
 export function LoginPage() {
-    const handleSubmit = (e: React.FormEvent) => {
+    const [emailOrName, setEmailOrName] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const { login, isAuthenticated, loading } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading && isAuthenticated) {
+            navigate('/', { replace: true });
+        }
+    }, [isAuthenticated, loading, navigate]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Intentando iniciar sesión...');
+        await login(emailOrName, password);
+        navigate('/', { replace: true });
     };
 
     return (
@@ -19,10 +33,12 @@ export function LoginPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="space-y-1">
-                        <label className="text-sm font-semibold text-slate-300 ml-1">Correo Electrónico</label>
+                        <label className="text-sm font-semibold text-slate-300 ml-1">Correo Electrónico o nombre</label>
                         <input 
-                            type="email" 
-                            placeholder="tu@email.com"
+                            type="text"
+                            value={emailOrName}
+                            onChange={(e) => setEmailOrName(e.target.value)}
+                            placeholder="tu@email.com o tu nombre de usuario"
                             className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                             required
                         />
@@ -32,6 +48,8 @@ export function LoginPage() {
                         <label className="text-sm font-semibold text-slate-300 ml-1">Contraseña</label>
                         <input 
                             type="password" 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••"
                             className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                             required

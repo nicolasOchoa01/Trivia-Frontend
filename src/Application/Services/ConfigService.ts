@@ -4,12 +4,18 @@ import { type IConfigRepository } from "../ports/IConfigRepository";
 
 export class ConfigService implements IConfigService {
     private readonly _repository: IConfigRepository;
+    private _configs!: Config[];
 
     constructor(repository: IConfigRepository){
         this._repository = repository;
     }
 
     async getAllConfigs(): Promise<Config[]> {
-        return await this._repository.getAllConfigs();
+        this._configs = await this._repository.getAllConfigs();
+        return this._configs;
+    }
+
+    getConfigs(): Config[] {
+        return this._configs;
     }
 }

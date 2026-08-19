@@ -3,18 +3,13 @@ import { useDependencies } from "./useDependencies";
 import type { IPartidaObserver } from "../../application/interfaces/IPartidaObserver";
 import type { IPartidaState } from "../../application/interfaces/IPartidaState";
 import type { Config } from "../../domain/entities/Config";
+import { useLocation } from "react-router-dom";
 
 export function usePartida() {
     const { partidaService } = useDependencies();
-
-    const config: Config = {
-        "id": "123",
-        "timer": true,
-        "seconds": 25,
-        "multipleChoice": true,
-        "random": false,
-        "category": "geografia"
-    };
+    
+    const location = useLocation();
+    const config: Config = location.state.config;
 
     const [state, setState] = useState<IPartidaState | null>(null);
     const [loading, setLoading] = useState<boolean>(true);

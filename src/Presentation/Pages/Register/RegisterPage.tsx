@@ -1,9 +1,26 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
 
 export function RegisterPage() {
-    const handleSubmit = (e: React.FormEvent) => {
+    const [userName, setUserName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const { isAuthenticated, register, loading } = useAuth();
+    
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading && isAuthenticated) {
+            navigate('/', { replace: true });
+        }
+    }, [isAuthenticated, loading, navigate]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Intentando registrar usuario...');
+        await register(userName, email, password);
+        navigate('/', { replace: true });
     };
 
     return (
@@ -21,6 +38,8 @@ export function RegisterPage() {
                     <div className="space-y-1">
                         <label className="text-sm font-semibold text-slate-300 ml-1">Nombre de Usuario</label>
                         <input 
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
                             type="text" 
                             placeholder="Ej. JugadorPro99"
                             className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all"
@@ -31,6 +50,8 @@ export function RegisterPage() {
                     <div className="space-y-1">
                         <label className="text-sm font-semibold text-slate-300 ml-1">Correo Electrónico</label>
                         <input 
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             type="email" 
                             placeholder="tu@email.com"
                             className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all"
@@ -41,6 +62,8 @@ export function RegisterPage() {
                     <div className="space-y-1">
                         <label className="text-sm font-semibold text-slate-300 ml-1">Contraseña</label>
                         <input 
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             type="password" 
                             placeholder="••••••••"
                             className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 transition-all"

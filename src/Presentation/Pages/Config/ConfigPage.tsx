@@ -1,13 +1,4 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-interface GameConfig {
-    categoryMode: 'random' | 'manual';
-    selectedCategories: string[];
-    hasOptions: boolean;
-    timeLimit: number; 
-    questionCount: number;
-}
+import { useConfig } from '../../hooks/useConfig';
 
 const CATEGORIES = [
     { id: 'geo', name: 'Geografía', icon: '🌍' },
@@ -19,37 +10,7 @@ const CATEGORIES = [
 ];
 
 export function ConfigPage() {
-    const navigate = useNavigate();
-
-    const [config, setConfig] = useState<GameConfig>({
-        categoryMode: 'random',
-        selectedCategories: ['geo', 'hist', 'cienc', 'arte', 'dep', 'ent'],
-        hasOptions: true,
-        timeLimit: 15,
-        questionCount: 10,
-    });
-
-    const toggleCategory = (categoryId: string) => {
-        setConfig((prev) => {
-            const exists = prev.selectedCategories.includes(categoryId);
-            if (exists) {
-                if (prev.selectedCategories.length === 1) return prev;
-                return {
-                    ...prev,
-                    selectedCategories: prev.selectedCategories.filter((id) => id !== categoryId),
-                };
-            } else {
-                return {
-                    ...prev,
-                    selectedCategories: [...prev.selectedCategories, categoryId],
-                };
-            }
-        });
-    };
-
-    const handleStartGame = () => {
-        navigate('/partida', { state: { config } });
-    };
+    const { config, setConfig, toggleCategory, handleStartGame } = useConfig();
 
     return (
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in pb-10">
@@ -69,9 +30,9 @@ export function ConfigPage() {
                     <div className="grid grid-cols-2 gap-3 p-1 bg-slate-950 rounded-xl border border-slate-800 max-w-md">
                         <button
                             type="button"
-                            onClick={() => setConfig({ ...config, categoryMode: 'random' })}
+                            onClick={() => setConfig({ ...config, random: true })}
                             className={`py-2 px-4 rounded-lg font-semibold text-sm transition-all ${
-                                config.categoryMode === 'random'
+                                config.random === true
                                     ? 'bg-indigo-600 text-white shadow-md'
                                     : 'text-slate-400 hover:text-white'
                             }`}
@@ -80,9 +41,9 @@ export function ConfigPage() {
                         </button>
                         <button
                             type="button"
-                            onClick={() => setConfig({ ...config, categoryMode: 'manual' })}
+                            onClick={() => setConfig({ ...config, random: false })}
                             className={`py-2 px-4 rounded-lg font-semibold text-sm transition-all ${
-                                config.categoryMode === 'manual'
+                                config.random === false
                                     ? 'bg-indigo-600 text-white shadow-md'
                                     : 'text-slate-400 hover:text-white'
                             }`}
@@ -91,10 +52,10 @@ export function ConfigPage() {
                         </button>
                     </div>
 
-                    {config.categoryMode === 'manual' && (
+                    {config.random === false && (
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
                             {CATEGORIES.map((cat) => {
-                                const isSelected = config.selectedCategories.includes(cat.id);
+                                const isSelected = config.category.includes(cat.id);
                                 return (
                                     <button
                                         key={cat.id}
@@ -122,9 +83,9 @@ export function ConfigPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button
                             type="button"
-                            onClick={() => setConfig({ ...config, hasOptions: true })}
+                            onClick={() => setConfig({ ...config, multipleChoice: true })}
                             className={`p-4 rounded-2xl border text-left transition-all ${
-                                config.hasOptions
+                                config.multipleChoice
                                     ? 'bg-indigo-950/80 border-indigo-500 text-white shadow-md'
                                     : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:border-slate-700'
                             }`}
@@ -135,9 +96,9 @@ export function ConfigPage() {
 
                         <button
                             type="button"
-                            onClick={() => setConfig({ ...config, hasOptions: false })}
+                            onClick={() => setConfig({ ...config, multipleChoice: false })}
                             className={`p-4 rounded-2xl border text-left transition-all ${
-                                !config.hasOptions
+                                !config.multipleChoice
                                     ? 'bg-indigo-950/80 border-indigo-500 text-white shadow-md'
                                     : 'bg-slate-950/50 border-slate-800 text-slate-400 hover:border-slate-700'
                             }`}
@@ -158,9 +119,9 @@ export function ConfigPage() {
                                 <button
                                     key={seconds}
                                     type="button"
-                                    onClick={() => setConfig({ ...config, timeLimit: seconds })}
+                                    onClick={() => setConfig({ ...config, seconds: seconds, timer: seconds > 0 })}
                                     className={`py-3 rounded-xl border text-center font-bold text-sm transition-all ${
-                                        config.timeLimit === seconds
+                                        config.seconds === seconds
                                             ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
                                             : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                                     }`}
@@ -180,9 +141,9 @@ export function ConfigPage() {
                                 <button
                                     key={count}
                                     type="button"
-                                    onClick={() => setConfig({ ...config, questionCount: count })}
+                                    onClick={() => setConfig({ ...config, numberQuestions: count })}
                                     className={`py-3 rounded-xl border text-center font-bold text-sm transition-all ${
-                                        config.questionCount === count
+                                        config.numberQuestions === count
                                             ? 'bg-indigo-600 border-indigo-500 text-white shadow-md'
                                             : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-700'
                                     }`}
@@ -206,4 +167,5 @@ export function ConfigPage() {
             </div>
         </div>
     );
+    
 }

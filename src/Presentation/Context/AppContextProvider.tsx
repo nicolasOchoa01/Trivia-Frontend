@@ -1,4 +1,4 @@
-import { services } from './AppDependencies';
+import { services } from './IAppDependencies';
 import { AppContext } from './AppContext';
 
 export const AppContextProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
