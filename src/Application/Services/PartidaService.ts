@@ -5,14 +5,21 @@ import { type IPartidaRepository } from "../ports/IPartidaRepository";
 import type { Question } from "../../domain/entities/Question";
 import type { IPartidaObserver } from "../interfaces/IPartidaObserver";
 import { PartidaState, type IPartidaState } from "../interfaces/IPartidaState";
+import type { IHistoryService } from "../interfaces/IHistoryService";
+import type { IUserService } from "../interfaces/IUserService";
+import type { History } from "../../domain/entities/History";
 
 export class PartidaService implements IPartidaService {
     private readonly _repository: IPartidaRepository;
+    private readonly _history: IHistoryService;
+    private readonly _user: IUserService;
     private _state!: IPartidaState;
     private _observer!: IPartidaObserver;
 
-    constructor(repository: IPartidaRepository){
+    constructor(repository: IPartidaRepository, history: IHistoryService, user: IUserService){
         this._repository = repository;
+        this._history = history;
+        this._user = user;
     }
 
     async getNewPartida(config: Config): Promise<Partida> {
@@ -38,7 +45,7 @@ export class PartidaService implements IPartidaService {
     }
     
     revolverOptions(): void {
-        console.log("opciones revueltas");
+        //console.log("opciones revueltas");
     }
 
     initPartida(): void {
@@ -47,6 +54,7 @@ export class PartidaService implements IPartidaService {
         this._state.questionActual = this._state.partidaActual.questions[0];
         this._state.questionIndex = 0;
         this._state.score = 0;
+        this._state.correctQuestions = 0;
         this._state.finish = false;
         this._state.init = true;
         this.notify();
@@ -55,6 +63,7 @@ export class PartidaService implements IPartidaService {
     anwered(answer: string): string {
         if (this._state.questionActual.answer == answer) {
             this._state.score = this._state.score + 10;
+            this._state.correctQuestions = this._state.correctQuestions + 1;
         }
         this.nextQuestion();
         this.notify();
@@ -74,6 +83,23 @@ export class PartidaService implements IPartidaService {
     endPartida(): void {
         console.log("finish");
         this._state.finish = true;
+
+        const hoy: Date = new Date();
+        const fecha: string = new Intl.DateTimeFormat('es-ES').format(hoy);
+        
+        const newHistory: History = {
+            user: this._user.getUser(),
+            score: this._state.score,
+            category: this._state.partidaActual.config.category,
+            questionsTotal: this._state.partidaActual.config.numberQuestions,
+            questionsCorrect: this._state.correctQuestions,
+            multipleChoice: this._state.partidaActual.config.multipleChoice,
+            random: this._state.partidaActual.config.random,
+            timer: this._state.partidaActual.config.timer,
+            seconds: this._state.partidaActual.config.seconds,
+            date: fecha,
+        };
+        this._history.setHistory(newHistory);
         this.notify();
     }
 

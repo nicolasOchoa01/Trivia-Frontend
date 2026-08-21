@@ -36,7 +36,6 @@ export function usePartida() {
 
         iniciarJuego();
     }, [partidaService]);
-
     
     const responder = (opcionSeleccionada: string) => {
         partidaService.anwered(opcionSeleccionada);

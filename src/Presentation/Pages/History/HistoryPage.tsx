@@ -1,13 +1,40 @@
 import { Link } from 'react-router-dom';
+import { useDependencies } from '../../hooks/useDependencies';
+import { useAuth } from '../../hooks/useAuth';
+import { useEffect, useState } from 'react';
+import type { History } from '../../../domain/entities/History';
 
-const mockHistory = [
-    { id: '1', date: '17 Ago 2026', category: 'Geografía', score: 150, correct: 15, total: 20 },
-    { id: '2', date: '16 Ago 2026', category: 'Aleatorio', score: 80, correct: 8, total: 10 },
-    { id: '3', date: '15 Ago 2026', category: 'Ciencia', score: 200, correct: 20, total: 20 },
-    { id: '4', date: '14 Ago 2026', category: 'Modo Experto', score: 50, correct: 5, total: 15 },
-];
+
 
 export function HistoryPage() {
+
+    const { historyService } = useDependencies();
+    const user = useAuth().user!;
+
+    const [history, setHistory] = useState<History[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+   
+
+    useEffect(() =>{
+        const getHistoryUser = async () => {
+            try{
+                const historyUser = await historyService.getHistoryByName(user.name);
+                setHistory(historyUser);
+                setLoading(false);
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            catch(error){
+                console.error("error al recuperar los historiales");
+            }
+        };
+        getHistoryUser();
+
+    }, [historyService]);
+
+
+    if (loading) {
+        return <div className="flex justify-center items-center h-screen text-xl font-bold">Cargando history...</div>;
+    }
     return (
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in pb-10">
             <div className="text-center space-y-2">
@@ -18,9 +45,9 @@ export function HistoryPage() {
             </div>
 
             <div className="space-y-4">
-                {mockHistory.map((game) => (
+                {history!.map((history) => (
                     <div 
-                        key={game.id} 
+                        
                         className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-4 hover:border-indigo-500/50 transition-colors shadow-sm"
                     >
                         <div className="flex items-center gap-4 w-full md:w-auto">
@@ -28,20 +55,20 @@ export function HistoryPage() {
                                 🏆
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold text-white">{game.category}</h3>
-                                <p className="text-sm text-slate-400">{game.date}</p>
+                                <h3 className="text-lg font-bold text-white">{history.category[0]}</h3>
+                                <p className="text-sm text-slate-400">{history.date}</p>
                             </div>
                         </div>
 
                         <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
                             <div className="text-center">
                                 <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Aciertos</p>
-                                <p className="text-lg font-bold text-slate-200">{game.correct} / {game.total}</p>
+                                <p className="text-lg font-bold text-slate-200">{history.questionsCorrect} / {history.questionsTotal}</p>
                             </div>
                             <div className="text-right">
                                 <p className="text-xs text-indigo-400 uppercase tracking-wider font-semibold">Puntaje</p>
                                 <p className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-                                    {game.score}
+                                    {history.score}
                                 </p>
                             </div>
                         </div>

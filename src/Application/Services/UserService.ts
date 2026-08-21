@@ -8,6 +8,13 @@ export class UserService implements IUserService {
     constructor(repository: IUserRepository){
         this._repository = repository;
     }
+    getUser(): User {
+        const storedUser = localStorage.getItem("currentUser");
+        if (!storedUser) {
+            throw new Error("No hay usuario logueado");
+        }   
+        return JSON.parse(storedUser) as User;
+    }
     async register(userName: string, email: string, password: string): Promise<User> {
         if(userName == null){
             throw new Error("el nombre de usuario es requerido");

@@ -31,9 +31,14 @@ export interface IAppDependencies {
   historyService: IHistoryService;
 };
 
+const userService = new UserService(userRepository);
+const configService = new ConfigService(configRepository);
+const historyService = new HistoryService(historyRepository);
+const partidaService = new PartidaService(partidaRepository, historyService, userService);
+
 export const services: IAppDependencies = {
-  partidaService: new PartidaService(partidaRepository),
-  userService: new UserService(userRepository),
-  configService: new ConfigService(configRepository),
-  historyService: new HistoryService(historyRepository),
+  partidaService: partidaService,
+  userService: userService,
+  configService: configService,
+  historyService: historyService
 };

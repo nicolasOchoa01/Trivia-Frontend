@@ -6,18 +6,24 @@ export interface IPartidaState {
     partidaActual: Partida;
     questionActual: Question;
     questionIndex: number;
-    score: number;
+    
     init: boolean;
     finish: boolean;
+
+    score: number;
+    correctQuestions: number;
 }
 
 export class PartidaState implements IPartidaState{
     partidaActual: Partida;
     questionActual: Question;
     questionIndex: number;
-    score: number;
+    
     init: boolean;
     finish: boolean;
+
+    score: number;
+    correctQuestions: number;
 
     constructor(partida: Partida, question: Question){
         this.partidaActual = partida;
@@ -26,6 +32,7 @@ export class PartidaState implements IPartidaState{
         this.score = 0;
         this.init = false;
         this.finish = false;
+        this.correctQuestions = 0;
     }
 
 }

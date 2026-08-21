@@ -5,7 +5,10 @@ import { useAuth } from '../../hooks/useAuth';
 export function AsideComponent() {
     const navigate = useNavigate();
     const { configService } = useDependencies();
+    const { userService } = useDependencies();
     const { logout } = useAuth();
+
+    const user = userService.getUser();
 
     const handleQuickStart = async () => {
         try {
@@ -40,8 +43,8 @@ export function AsideComponent() {
                 <div className="w-20 h-20 bg-indigo-600 rounded-full mx-auto flex items-center justify-center text-4xl mb-3 shadow-lg">
                     👤
                 </div>
-                <h2 className="font-bold text-lg text-white">Jugador Experto</h2>
-                <p className="text-sm text-indigo-400">Nivel 5</p>
+                <h2 className="font-bold text-lg text-white">{user.name}</h2>
+                <p className="text-sm text-indigo-400">Score {user.totalScore}</p>
             </div>
 
             <nav className="flex flex-col gap-2">
