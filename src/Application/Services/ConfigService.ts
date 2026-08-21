@@ -9,6 +9,15 @@ export class ConfigService implements IConfigService {
     constructor(repository: IConfigRepository){
         this._repository = repository;
     }
+    async getStandardConfig(): Promise<Config> {
+        return await this._repository.getStandardConfig();
+    }
+    async getExpertConfig(): Promise<Config> {
+        return await this._repository.getExpertConfig();
+    }
+    async getEasyConfig(): Promise<Config> {
+        return await this._repository.getEasyConfig();
+    }
 
     async getAllConfigs(): Promise<Config[]> {
         this._configs = await this._repository.getAllConfigs();

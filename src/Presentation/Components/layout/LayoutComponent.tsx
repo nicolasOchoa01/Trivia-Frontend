@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { HeaderComponent } from '../header/HeaderComponent';
-import { FooterComponent } from '../footer/FoterComponent';
+import { FooterComponent } from '../footer/FooterComponent';
 import { AsideComponent } from '../aside/AsideComponent';
 import { NavComponent } from '../nav/NavComponent';
 
