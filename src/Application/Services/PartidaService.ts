@@ -86,7 +86,7 @@ export class PartidaService implements IPartidaService {
 
         const hoy: Date = new Date();
         const fecha: string = new Intl.DateTimeFormat('es-ES').format(hoy);
-        
+
         const newHistory: History = {
             user: this._user.getUser(),
             score: this._state.score,
@@ -103,7 +103,7 @@ export class PartidaService implements IPartidaService {
         this.notify();
     }
 
-    suscribe(observer: IPartidaObserver) {
+    suscribe(observer: IPartidaObserver): void {
         this._observer = observer;
     }
 

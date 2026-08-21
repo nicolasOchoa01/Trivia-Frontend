@@ -7,8 +7,7 @@
       "numberQuestions": 20,
       "multipleChoice": true,
       "random": false,
-      "category": ["geografia"],
-      "date": "12/06/2026"
+      "category": ["geografia"]
   },
   "questions": [
     {

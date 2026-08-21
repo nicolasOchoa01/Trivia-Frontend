@@ -1,8 +1,8 @@
 import { type Config } from "../../domain/entities/Config";
 import { type Partida } from "../../domain/entities/Partida";
-import { type IPartidaObserver } from './IPartidaObserver'
+import type { IPartidaObservable } from "./IPartidaObservable";
 
-export interface IPartidaService {
+export interface IPartidaService extends IPartidaObservable {
     getNewPartida(config: Config): Promise<Partida>;
     revolverQuestions(): void;
     revolverOptions(): void;
@@ -10,6 +10,4 @@ export interface IPartidaService {
     anwered(answer: string): string; 
     nextQuestion(): void;
     endPartida(): void;
-    suscribe(observer: IPartidaObserver): void;
-    notify(): void;
 }
