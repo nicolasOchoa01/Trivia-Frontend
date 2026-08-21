@@ -8,8 +8,11 @@ export class HistoryService implements IHistoryService {
     constructor(repository: IHistoryRepository){
         this._repository = repository;
     }
+    setHistory(history: History): void {
+        this._repository.setHistory(history);
+    }
 
-    async getHistoryByName(name: string): Promise<History>{
+    async getHistoryByName(name: string): Promise<History[]>{
         if(name == null){
             throw new Error("el nombre es requerido");
         }

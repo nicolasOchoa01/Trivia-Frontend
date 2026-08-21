@@ -1,6 +1,7 @@
 import { type History } from "../../domain/entities/History";
 
 export interface IHistoryRepository {
-    getHistoryByName(name: string): Promise<History>;
+    getHistoryByName(name: string): Promise<History[]>;
     getAllHistories(): Promise<History[]>;
+    setHistory(history: History): void;
 }

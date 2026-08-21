@@ -4,9 +4,10 @@
       "id": "123",
       "timer": true,
       "seconds": 25,
+      "numberQuestions": 20,
       "multipleChoice": true,
       "random": false,
-      "category": "geografia"
+      "category": ["geografia"]
   },
   "questions": [
     {

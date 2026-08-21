@@ -24,16 +24,21 @@ const userRepository: IUserRepository = new UserRepositoryLocal();
 const configRepository: IConfigRepository = new ConfigRepositoryLocal();
 const historyRepository: IHistoryRepository = new HistoryRepositoryLocal();
 
-export interface AppDependencies {
+export interface IAppDependencies {
   partidaService: IPartidaService;
   userService: IUserService;
   configService: IConfigService;
   historyService: IHistoryService;
 };
 
-export const services: AppDependencies = {
-  partidaService: new PartidaService(partidaRepository),
-  userService: new UserService(userRepository),
-  configService: new ConfigService(configRepository),
-  historyService: new HistoryService(historyRepository),
+const userService = new UserService(userRepository);
+const configService = new ConfigService(configRepository);
+const historyService = new HistoryService(historyRepository);
+const partidaService = new PartidaService(partidaRepository, historyService, userService);
+
+export const services: IAppDependencies = {
+  partidaService: partidaService,
+  userService: userService,
+  configService: configService,
+  historyService: historyService
 };

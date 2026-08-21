@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { type AppDependencies } from "./AppDependencies";
+import { type IAppDependencies } from "./IAppDependencies";
 
-export const AppContext = createContext<AppDependencies | null>(null);
+export const AppContext = createContext<IAppDependencies | null>(null);
