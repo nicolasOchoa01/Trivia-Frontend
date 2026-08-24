@@ -15,14 +15,18 @@ import { UserService } from "../../application/services/UserService";
 
 import { ConfigRepositoryLocal } from "../../infrastructure/repositories/local/ConfigRepositoryLocal";
 import { HistoryRepositoryLocal } from "../../infrastructure/repositories/local/HistoryRepositoryLocal";
-import { PartidaRepositoryLocal } from "../../infrastructure/repositories/local/PartidaRepositoryLocal";
+//import { PartidaRepositoryLocal } from "../../infrastructure/repositories/local/PartidaRepositoryLocal";
 import { UserRepositoryLocal } from "../../infrastructure/repositories/local/UserRepositoryLocal";
+import { PartidaRepositoryApi } from "../../infrastructure/repositories/api/PartidaRepositoryApi";
 
 
-const partidaRepository: IPartidaRepository = new PartidaRepositoryLocal();
+//const partidaRepository: IPartidaRepository = new PartidaRepositoryLocal();
 const userRepository: IUserRepository = new UserRepositoryLocal();
 const configRepository: IConfigRepository = new ConfigRepositoryLocal();
 const historyRepository: IHistoryRepository = new HistoryRepositoryLocal();
+
+const partidaRepository: IPartidaRepository = new PartidaRepositoryApi();
+
 
 export interface IAppDependencies {
   partidaService: IPartidaService;

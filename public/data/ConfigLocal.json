@@ -1,11 +1,12 @@
 {
-    "id": "123",
-    "timer": true,
-    "seconds": 25,
-    "numberQuestions": 20,
-    "multipleChoice": true,
-    "random": false,
-    "category": [
-        "geografia"
-    ]
+  "id": "6a8b83c41c0949aee4857b15",
+  "timer": false,
+  "seconds": 0,
+  "numberQuestions": 20,
+  "multipleChoice": true,
+  "random": false,
+  "category": [
+    "Geografia",
+    "Literatura"
+  ]
 }
