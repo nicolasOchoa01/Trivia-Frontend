@@ -4,8 +4,9 @@ import { type Partida } from "../../../domain/entities/Partida";
 
 export class PartidaRepositoryApi implements IPartidaRepository {
     async getNewPartida(config:Config): Promise<Partida>{
+        const apiUrl = import.meta.env.API_URL || "https://localhost:7126";
 
-        const response = await fetch("https://localhost:7126/api/Partida", {
+        const response = await fetch(`${apiUrl}/api/Partida`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
