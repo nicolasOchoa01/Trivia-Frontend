@@ -1,9 +1,23 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDependencies } from '../../hooks/useDependencies';
+import { useEffect } from 'react';
 
 export function HomePage() {
     const navigate = useNavigate();
-    const { configService } = useDependencies();
+    const { configService, userService } = useDependencies();
+
+    useEffect(() => {
+
+        const obtenerConfigs = async () => {
+            try {
+                await configService.getAllConfigs(userService.getUser().id);
+            } catch (error) {
+                console.error("Error al cargar las configuraciones:", error);
+            } 
+        };
+
+        obtenerConfigs();
+    }, [configService]);
 
     const handleQuickStart = async () => {
         try {

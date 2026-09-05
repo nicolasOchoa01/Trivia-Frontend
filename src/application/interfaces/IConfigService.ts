@@ -1,9 +1,10 @@
 import { type Config } from "../../domain/entities/Config"
+import type { AllConfigs } from "../models/AllConfigs";
 
 export interface IConfigService {
-    getAllConfigs(): Promise<Config[]>;
-    getConfigs(): Config[];
-    getStandardConfig(): Promise<Config>;
-    getExpertConfig(): Promise<Config>;
-    getEasyConfig(): Promise<Config>;
+    getAllConfigs(userId: string): Promise<AllConfigs>;
+    getConfigs(): AllConfigs;
+    getStandardConfig(): Config;
+    getExpertConfig(): Config;
+    getEasyConfig(): Config;
 }

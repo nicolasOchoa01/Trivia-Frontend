@@ -13,18 +13,21 @@ import { HistoryService } from "../../application/services/HistoryService";
 import { PartidaService } from "../../application/services/PartidaService";
 import { UserService } from "../../application/services/UserService";
 
-import { ConfigRepositoryLocal } from "../../infrastructure/repositories/local/ConfigRepositoryLocal";
+//import { ConfigRepositoryLocal } from "../../infrastructure/repositories/local/ConfigRepositoryLocal";
 import { HistoryRepositoryLocal } from "../../infrastructure/repositories/local/HistoryRepositoryLocal";
 //import { PartidaRepositoryLocal } from "../../infrastructure/repositories/local/PartidaRepositoryLocal";
 import { UserRepositoryLocal } from "../../infrastructure/repositories/local/UserRepositoryLocal";
+
+import { ConfigRepositoryApi } from "../../infrastructure/repositories/api/ConfigRepositoryApi";
 import { PartidaRepositoryApi } from "../../infrastructure/repositories/api/PartidaRepositoryApi";
 
 
 //const partidaRepository: IPartidaRepository = new PartidaRepositoryLocal();
 const userRepository: IUserRepository = new UserRepositoryLocal();
-const configRepository: IConfigRepository = new ConfigRepositoryLocal();
+//const configRepository: IConfigRepository = new ConfigRepositoryLocal();
 const historyRepository: IHistoryRepository = new HistoryRepositoryLocal();
 
+const configRepository: IConfigRepository = new ConfigRepositoryApi();
 const partidaRepository: IPartidaRepository = new PartidaRepositoryApi();
 
 

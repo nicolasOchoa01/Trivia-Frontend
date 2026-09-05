@@ -1,8 +1,5 @@
-import { type Config } from "../../domain/entities/Config";
+import type { AllConfigs } from "../models/AllConfigs";
 
 export interface IConfigRepository {
-    getAllConfigs(): Promise<Config[]>
-    getStandardConfig(): Promise<Config>;
-    getExpertConfig(): Promise<Config>;
-    getEasyConfig(): Promise<Config>;
+    getAllConfigs(userId: string): Promise<AllConfigs>
 }

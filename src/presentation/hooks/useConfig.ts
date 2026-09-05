@@ -8,6 +8,7 @@ export function useConfig() {
     const navigate = useNavigate();
     const [config, setConfig] = useState<Config>({
         id: "",
+        name: "",
         timer: false,
         seconds: 0,
         numberQuestions: 0,
