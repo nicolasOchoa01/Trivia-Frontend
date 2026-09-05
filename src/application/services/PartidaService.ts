@@ -27,7 +27,7 @@ export class PartidaService implements IPartidaService {
             throw new Error("La configuración es requerida");
         }
         
-        const partida = await this._repository.getNewPartida(config);
+        const partida = await this._repository.getNewPartida(config.id);
         const question = partida.questions[0];
         this._state = new PartidaState(partida, question);
         return this._state.partidaActual;

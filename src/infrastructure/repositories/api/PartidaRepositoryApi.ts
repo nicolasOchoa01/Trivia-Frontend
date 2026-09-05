@@ -1,9 +1,8 @@
 import { type IPartidaRepository } from "../../../application/ports/IPartidaRepository";
-import { type Config } from "../../../domain/entities/Config";
 import { type Partida } from "../../../domain/entities/Partida";
 
 export class PartidaRepositoryApi implements IPartidaRepository {
-    async getNewPartida(config:Config): Promise<Partida>{
+    async getNewPartida(configId:string): Promise<Partida>{
         const apiUrl = import.meta.env.API_URL || "https://localhost:7126";
 
         const response = await fetch(`${apiUrl}/api/Partida`, {
@@ -11,7 +10,7 @@ export class PartidaRepositoryApi implements IPartidaRepository {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(config)
+            body: JSON.stringify(configId)
         });
         
 

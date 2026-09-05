@@ -2,6 +2,7 @@
   "id": "partida-geografia-001",
   "config": {
       "id": "123",
+      "name": "standard",
       "timer": true,
       "seconds": 25,
       "numberQuestions": 20,

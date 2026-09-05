@@ -1,0 +1,55 @@
+{
+    "Standard": {
+        "id": "6a8b83c41c0949aee4857b15",
+        "name": "standard",
+        "timer": false,
+        "seconds": 0,
+        "numberQuestions": 20,
+        "multipleChoice": true,
+        "random": false,
+        "category": [
+            "Geografia",
+            "Ciencia"
+        ]
+    },
+    "Expert": {
+        "id": "6a8b83c41c0949aee4857b15",
+        "name": "expert",
+        "timer": false,
+        "seconds": 0,
+        "numberQuestions": 20,
+        "multipleChoice": true,
+        "random": false,
+        "category": [
+            "Entretenimiento",
+            "Literatura"
+        ]
+    },
+    "Easy": {
+        "id": "6a8b83c41c0949aee4857b15",
+        "name": "easy",
+        "timer": false,
+        "seconds": 0,
+        "numberQuestions": 20,
+        "multipleChoice": true,
+        "random": false,
+        "category": [
+            "Deportes"
+        ]
+    },
+    "PersonalConfigs": [
+        {
+            "id": "6a8b83c41c0949aee4857b15",
+            "name": "personalizado",
+            "timer": false,
+            "seconds": 0,
+            "numberQuestions": 20,
+            "multipleChoice": true,
+            "random": false,
+            "category": [
+                "Geografia",
+                "Literatura"
+            ]
+        }
+    ]
+}

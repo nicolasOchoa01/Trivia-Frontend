@@ -1,30 +1,34 @@
 import { type Config } from "../../domain/entities/Config";
 import { type IConfigService } from "../interfaces/IConfigService";
+import type { AllConfigs } from "../models/AllConfigs";
 import { type IConfigRepository } from "../ports/IConfigRepository";
 
 export class ConfigService implements IConfigService {
     private readonly _repository: IConfigRepository;
-    private _configs!: Config[];
+    private _configs!: AllConfigs;
 
     constructor(repository: IConfigRepository){
         this._repository = repository;
     }
-    async getStandardConfig(): Promise<Config> {
-        return await this._repository.getStandardConfig();
+    getStandardConfig(): Config {
+        const standardConfig: Config = this._configs.standard;
+        return standardConfig;
     }
-    async getExpertConfig(): Promise<Config> {
-        return await this._repository.getExpertConfig();
+    getExpertConfig(): Config {
+        const expertConfig: Config = this._configs.expert;
+        return expertConfig;
     }
-    async getEasyConfig(): Promise<Config> {
-        return await this._repository.getEasyConfig();
+    getEasyConfig(): Config {
+        const easyConfig: Config = this._configs.easy;
+        return easyConfig;
     }
 
-    async getAllConfigs(): Promise<Config[]> {
-        this._configs = await this._repository.getAllConfigs();
+    async getAllConfigs(userId: string): Promise<AllConfigs> {
+        this._configs = await this._repository.getAllConfigs(userId);
         return this._configs;
     }
 
-    getConfigs(): Config[] {
+    getConfigs(): AllConfigs {
         return this._configs;
     }
 }
