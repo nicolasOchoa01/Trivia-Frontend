@@ -55,7 +55,7 @@ export function HistoryPage() {
                                 🏆
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold text-white">{history.category[0]}</h3>
+                                <h3 className="text-lg font-bold text-white">{history.category[0] || "Random"}</h3>
                                 <p className="text-sm text-slate-400">{new Date(history.date).toLocaleDateString("es-AR")}</p>
                             </div>
                         </div>

@@ -28,6 +28,7 @@ export class PartidaService implements IPartidaService {
         }
         
         const partida = await this._repository.getNewPartida(config.id);
+        console.log("Partida obtenida:", partida);
         const question = partida.questions[0];
         this._state = new PartidaState(partida, question);
         return this._state.partidaActual;

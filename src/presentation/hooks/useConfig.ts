@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import type { Config } from "../../domain/entities/Config";
+import { useDependencies } from "./useDependencies";
 
 
 export function useConfig() {
 
+    const { configService, userService } = useDependencies();
+    const userId = userService.getUser();
     const navigate = useNavigate();
     const [config, setConfig] = useState<Config>({
         id: "",
@@ -37,8 +40,9 @@ export function useConfig() {
         });
     };
 
-    const handleStartGame = () => {
-        navigate('/partida', { state: { config } });
+    const handleStartGame = async () => {
+        const newConfig = await configService.setConfig(userId.id, config);
+        navigate('/partida', { state: { config: newConfig } });
     };
 
     return {

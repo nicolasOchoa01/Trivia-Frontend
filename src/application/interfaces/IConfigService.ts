@@ -7,4 +7,5 @@ export interface IConfigService {
     getStandardConfig(): Config;
     getExpertConfig(): Config;
     getEasyConfig(): Config;
+    setConfig(userId: string,config: Config): Promise<Config>;
 }

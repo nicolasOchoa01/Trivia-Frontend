@@ -31,4 +31,12 @@ export class ConfigService implements IConfigService {
     getConfigs(): AllConfigs {
         return this._configs;
     }
+
+    async setConfig(userId:string, config: Config): Promise<Config> {
+        if(!config.name || config.name.trim() === "") {
+            config.name = "MiConfig";
+        }
+        const response = await this._repository.setConfig(userId, config);
+        return response;
+    }
 }

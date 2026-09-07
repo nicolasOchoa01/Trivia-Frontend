@@ -1,12 +1,12 @@
 import { useConfig } from '../../hooks/useConfig';
 
 const CATEGORIES = [
-    { id: 'geo', name: 'Geografía', icon: '🌍' },
-    { id: 'hist', name: 'Historia', icon: '📜' },
-    { id: 'cienc', name: 'Ciencia', icon: '🧪' },
-    { id: 'arte', name: 'Arte y Literatura', icon: '🎨' },
-    { id: 'dep', name: 'Deportes', icon: '⚽' },
-    { id: 'ent', name: 'Entretenimiento', icon: '🎬' },
+    { id: 'Geografia', name: 'Geografía', icon: '🌍' },
+    { id: 'Historia', name: 'Historia', icon: '📜' },
+    { id: 'Ciencia', name: 'Ciencia', icon: '🧪' },
+    { id: 'Musica', name: 'Música', icon: '🎵' },
+    { id: 'Deportes', name: 'Deportes', icon: '⚽' },
+    { id: 'Entretenimiento', name: 'Entretenimiento', icon: '🎬' },
 ];
 
 export function ConfigPage() {
@@ -19,6 +19,16 @@ export function ConfigPage() {
                     ⚙️ Configurar Partida
                 </h1>
                 <p className="text-slate-400">Personalizá las reglas de tu juego antes de empezar.</p>
+            </div>
+
+            <div className="flex flex-col items-center gap-4 w-full max-w-sm">
+                <input 
+                    type="text"
+                    placeholder="Nombre de la configuración"
+                    value={config.name}
+                    onChange={(e) => setConfig({ ...config, name: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 text-slate-100 placeholder:text-slate-500 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all duration-200 shadow-sm"
+                />
             </div>
 
             <div className="space-y-6">

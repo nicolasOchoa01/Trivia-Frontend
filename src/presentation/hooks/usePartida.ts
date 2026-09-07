@@ -10,6 +10,7 @@ export function usePartida() {
     
     const location = useLocation();
     const config: Config = location.state.config;
+    console.log('Config received in usePartida:', config);
 
     const [state, setState] = useState<IPartidaState | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
