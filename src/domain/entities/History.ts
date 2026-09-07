@@ -1,6 +1,6 @@
-import { type User } from "./User";
 export interface History {
-    user: User;
+    userId: string;
+    username: string;
     score: number;
     category: string[];
     questionsTotal: number;
@@ -9,5 +9,5 @@ export interface History {
     random: boolean;
     timer: boolean;
     seconds: number;
-    date: string;
+    date: Date;
 }

@@ -84,11 +84,11 @@ export class PartidaService implements IPartidaService {
         console.log("finish");
         this._state.finish = true;
 
-        const hoy: Date = new Date();
-        const fecha: string = new Intl.DateTimeFormat('es-ES').format(hoy);
+        const fecha: Date = new Date();
 
         const newHistory: History = {
-            user: this._user.getUser(),
+            userId: this._user.getUser().id,
+            username: this._user.getUser().name,
             score: this._state.score,
             category: this._state.partidaActual.config.category,
             questionsTotal: this._state.partidaActual.config.numberQuestions,

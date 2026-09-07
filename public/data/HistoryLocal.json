@@ -1,8 +1,6 @@
 {
-    "user": {
-        "id": "123",
-        "name": "nicolas"
-    },
+    "userId": "6a93a962a7680cfc9eb8186a",
+    "username": "nicolas",
     "score": 59,
     "category": ["geografia"],
     "questionsTotal": 20,
@@ -11,5 +9,5 @@
     "random": false,
     "timer": false,
     "seconds": 15,
-    "date": "12/06/2026"
+    "date": "2026-06-07T14:30:00Z"
 }

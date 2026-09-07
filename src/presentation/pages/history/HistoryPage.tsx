@@ -18,7 +18,7 @@ export function HistoryPage() {
     useEffect(() =>{
         const getHistoryUser = async () => {
             try{
-                const historyUser = await historyService.getHistoryByName(user.name);
+                const historyUser = await historyService.getHistoryByUserId(user.id);
                 setHistory(historyUser);
                 setLoading(false);
             }
@@ -56,7 +56,7 @@ export function HistoryPage() {
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-white">{history.category[0]}</h3>
-                                <p className="text-sm text-slate-400">{history.date}</p>
+                                <p className="text-sm text-slate-400">{new Date(history.date).toLocaleDateString("es-AR")}</p>
                             </div>
                         </div>
 

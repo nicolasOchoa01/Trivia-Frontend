@@ -12,12 +12,12 @@ export class HistoryService implements IHistoryService {
         this._repository.setHistory(history);
     }
 
-    async getHistoryByName(name: string): Promise<History[]>{
-        if(name == null){
-            throw new Error("el nombre es requerido");
+    async getHistoryByUserId(userId: string): Promise<History[]>{
+        if(userId == null){
+            throw new Error("el ID de usuario es requerido");
         }
 
-        return await this._repository.getHistoryByName(name);
+        return await this._repository.getHistoryByUserId(userId);
     }
     async getAllHistories(): Promise<History[]>{
         return await this._repository.getAllHistories();

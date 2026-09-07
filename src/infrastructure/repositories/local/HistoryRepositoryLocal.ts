@@ -7,9 +7,9 @@ export class HistoryRepositoryLocal implements IHistoryRepository {
         console.log(`guadando el historial de esta partida`);
         console.log(history);
     }
-    async getHistoryByName(name: string): Promise<History[]> {
+    async getHistoryByUserId(userId: string): Promise<History[]> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-        console.log(name);
+        console.log(userId);
         const history = historyJson as unknown as History;
         return [history, history, history, history, history];
     }
