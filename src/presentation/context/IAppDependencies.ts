@@ -16,21 +16,23 @@ import { UserService } from "../../application/services/UserService";
 //import { ConfigRepositoryLocal } from "../../infrastructure/repositories/local/ConfigRepositoryLocal";
 //import { HistoryRepositoryLocal } from "../../infrastructure/repositories/local/HistoryRepositoryLocal";
 //import { PartidaRepositoryLocal } from "../../infrastructure/repositories/local/PartidaRepositoryLocal";
-import { UserRepositoryLocal } from "../../infrastructure/repositories/local/UserRepositoryLocal";
+//import { UserRepositoryLocal } from "../../infrastructure/repositories/local/UserRepositoryLocal";
 
 import { ConfigRepositoryApi } from "../../infrastructure/repositories/api/ConfigRepositoryApi";
 import { PartidaRepositoryApi } from "../../infrastructure/repositories/api/PartidaRepositoryApi";
 import { HistoryRepositoryApi } from "../../infrastructure/repositories/api/HistoryRepositoryApi";
+import { UserRepositoryApi } from "../../infrastructure/repositories/api/UserRepositoryApi";
 
 
 //const partidaRepository: IPartidaRepository = new PartidaRepositoryLocal();
-const userRepository: IUserRepository = new UserRepositoryLocal();
+//const userRepository: IUserRepository = new UserRepositoryLocal();
 //const configRepository: IConfigRepository = new ConfigRepositoryLocal();
 //const historyRepository: IHistoryRepository = new HistoryRepositoryLocal();
 
 const configRepository: IConfigRepository = new ConfigRepositoryApi();
 const partidaRepository: IPartidaRepository = new PartidaRepositoryApi();
 const historyRepository: IHistoryRepository = new HistoryRepositoryApi();
+const userRepository: IUserRepository = new UserRepositoryApi();
 
 
 export interface IAppDependencies {

@@ -1,5 +1,7 @@
 import { type User } from "../../domain/entities/User";
 import { type IUserService } from "../interfaces/IUserService";
+import type { Login } from "../models/Login";
+import type { Register } from "../models/Register";
 import { type IUserRepository } from "../ports/IUserRepository";
 
 export class UserService implements IUserService {
@@ -49,7 +51,9 @@ export class UserService implements IUserService {
         if(!/^[a-zA-Z0-9]+$/.test(password)){
             throw new Error("el password debe contener solo letras y numeros");
         }
-        const newUser = await this._repository.register(userName, email, password);
+
+        const register: Register = { name:userName, email: email, password:password };
+        const newUser = await this._repository.register(register);
         localStorage.setItem("currentUser", JSON.stringify(newUser));
         return newUser;
     }
@@ -73,11 +77,12 @@ export class UserService implements IUserService {
         if(!/^[a-zA-Z0-9]+$/.test(password)){
             throw new Error("password debe contener solo letras y numeros");
         }
-        if(!/^[a-zA-Z0-9@]+$/.test(emailOrName)){
+        if(!/^[a-zA-Z0-9@.]+$/.test(emailOrName)){
             throw new Error("email o nombre de usuario debe contener solo letras, numeros y @");
         }
         
-        const loggedUser = await this._repository.login(emailOrName, password);
+        const login: Login = { nameOrEmail: emailOrName, password: password };
+        const loggedUser = await this._repository.login(login);
         console.log("loggedUser", loggedUser);
         
         localStorage.setItem("currentUser", JSON.stringify(loggedUser));

@@ -1,18 +1,20 @@
 import { type IUserRepository } from "../../../application/ports/IUserRepository";
 import { type User } from "../../../domain/entities/User";
 import userJson from "../../../../public/data/UserLocal.json"
+import type { Register } from "../../../application/models/Register";
+import type { Login } from "../../../application/models/Login";
 
 
 export class UserRepositoryLocal implements IUserRepository {
-    async register(userName: string, email: string, password: string): Promise<User> {
+    async register(register: Register): Promise<User> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-        console.log(userName, email, password);
+        console.log(register.userName, register.email, register.password);
         const user = userJson as unknown as User;
         return user;
     }
-    async login(emailOrName: string, password: string): Promise<User> {
+    async login(login: Login): Promise<User> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-        console.log(emailOrName, password);
+        console.log(login.email, login.password);
         const user = userJson as unknown as User;
         return user;
     }
