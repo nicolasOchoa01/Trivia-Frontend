@@ -10,4 +10,5 @@ export interface IPartidaService extends IPartidaObservable {
     anwered(answer: string): string; 
     nextQuestion(): void;
     endPartida(): void;
+    setDelay(delay: number): void;
 }

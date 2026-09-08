@@ -15,12 +15,15 @@ export class PartidaService implements IPartidaService {
     private readonly _user: IUserService;
     private _state!: IPartidaState;
     private _observer!: IPartidaObserver;
+    private _timerInterval: number | null = null;
+    private _delay: number = 1000;
 
     constructor(repository: IPartidaRepository, history: IHistoryService, user: IUserService){
         this._repository = repository;
         this._history = history;
         this._user = user;
     }
+    
 
     async getNewPartida(config: Config): Promise<Partida> {
         if (!config) {
@@ -28,7 +31,6 @@ export class PartidaService implements IPartidaService {
         }
         
         const partida = await this._repository.getNewPartida(config.id);
-        console.log("Partida obtenida:", partida);
         const question = partida.questions[0];
         this._state = new PartidaState(partida, question);
         return this._state.partidaActual;
@@ -46,7 +48,19 @@ export class PartidaService implements IPartidaService {
     }
     
     revolverOptions(): void {
-        //console.log("opciones revueltas");
+        //revolver las opciones de cada pregunta
+        this._state.partidaActual.questions.forEach((question) => {
+            const shuffledOptions = [...question.options];
+            for (let i = shuffledOptions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+            }
+            question.options = shuffledOptions;
+        });
+    }
+
+    setDelay(delay: number): void {
+        this._delay = delay;
     }
 
     initPartida(): void {
@@ -58,31 +72,77 @@ export class PartidaService implements IPartidaService {
         this._state.correctQuestions = 0;
         this._state.finish = false;
         this._state.init = true;
-        this.notify();
+        this.regresiveTimer();
+        this.notify();    
+    }
+
+    stopTimer(): void {
+        if (this._timerInterval) {
+            clearInterval(this._timerInterval);
+            this._timerInterval = null;
+        }
+    }
+
+    regresiveTimer(): void {
+        if(!this._state.partidaActual.config.timer) return;
+
+        this.stopTimer();
+        this._timerInterval = setInterval(() => {
+            if (this._state.leftTimeQuestion <= 0) {
+                this.stopTimer();
+                this.nextQuestion();
+                
+                this.notify();
+            }
+            else{
+                this._state.leftTimeQuestion--;
+                console.log("time left", this._state.leftTimeQuestion);
+                this.notify();
+            }
+        }, 1000);
     }
 
     anwered(answer: string): string {
+        this.stopTimer();
+        this._state.leftTimeQuestion = this._state.partidaActual.config.seconds;
         if (this._state.questionActual.answer == answer) {
             this._state.score = this._state.score + 10;
             this._state.correctQuestions = this._state.correctQuestions + 1;
         }
-        this.nextQuestion();
-        this.notify();
+        
+        setTimeout(() => {
+            this.nextQuestion();
+            this.notify();
+        }, this._delay);
+
         return this._state.questionActual.answer;
     }
 
+    
     nextQuestion(): void {
+        if(this._state.finish) return;
         if (this._state.partidaActual.questions.length - 1 > this._state.questionIndex) {
             this._state.questionIndex = this._state.questionIndex + 1;
             this._state.questionActual = this._state.partidaActual.questions[this._state.questionIndex];
+
+            this._state.leftTimeQuestion = this._state.partidaActual.config.seconds;
+            this.regresiveTimer();
         } 
         else {
+            this.stopTimer();
             this.endPartida();
         }
     }
 
     endPartida(): void {
         console.log("finish");
+        if(this._state.finish) return;
+        if(this._state.partidaActual.questions.length - 1 > this._state.questionIndex){
+            this._state.finish = true;
+            this.stopTimer();
+            return;
+        }
+
         this._state.finish = true;
 
         const fecha: Date = new Date();
@@ -106,6 +166,11 @@ export class PartidaService implements IPartidaService {
 
     suscribe(observer: IPartidaObserver): void {
         this._observer = observer;
+    }
+
+    unsubscribe(observer: IPartidaObserver): void {
+        console.log("unsubscribe", observer);
+        this._observer = null!;
     }
 
     notify(): void {

@@ -7,13 +7,11 @@ import { useLocation } from "react-router-dom";
 
 export function usePartida() {
     const { partidaService } = useDependencies();
-    
     const location = useLocation();
     const config: Config = location.state.config;
-    console.log('Config received in usePartida:', config);
-
     const [state, setState] = useState<IPartidaState | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    
 
     useEffect(() => {
         const observer: IPartidaObserver = {
@@ -27,7 +25,9 @@ export function usePartida() {
             try {
                 setLoading(true);
                 await partidaService.getNewPartida(config);
+                partidaService.setDelay(1400);
                 partidaService.initPartida();
+
             } catch (error) {
                 console.error("Error al cargar la partida:", error);
             } finally {
@@ -36,11 +36,20 @@ export function usePartida() {
         };
 
         iniciarJuego();
+
+        return () => {
+            partidaService.endPartida();
+            partidaService.unsubscribe(observer);
+            
+        }
+        
     }, [partidaService]);
     
-    const responder = (opcionSeleccionada: string) => {
-        partidaService.anwered(opcionSeleccionada);
+    const responder = (opcionSeleccionada: string) : string => {
+        return partidaService.anwered(opcionSeleccionada);
     };
+
+    
 
     return {
         preguntaActual: state?.questionActual || null,
@@ -49,6 +58,9 @@ export function usePartida() {
         score: state?.score || 0,
         loading,
         isFinished: state?.finish || false,
+        timer: config.timer,
+        seconds: config.seconds,
+        leftTimeQuestion: state?.leftTimeQuestion || 0,
         responder,
     };
 }

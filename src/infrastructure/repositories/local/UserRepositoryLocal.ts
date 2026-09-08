@@ -8,13 +8,13 @@ import type { Login } from "../../../application/models/Login";
 export class UserRepositoryLocal implements IUserRepository {
     async register(register: Register): Promise<User> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-        console.log(register.userName, register.email, register.password);
+        console.log(register.name, register.email, register.password);
         const user = userJson as unknown as User;
         return user;
     }
     async login(login: Login): Promise<User> {
         await new Promise((resolve) => setTimeout(resolve, 500));
-        console.log(login.email, login.password);
+        console.log(login.nameOrEmail, login.password);
         const user = userJson as unknown as User;
         return user;
     }

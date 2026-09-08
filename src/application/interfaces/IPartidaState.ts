@@ -6,6 +6,7 @@ export interface IPartidaState {
     partidaActual: Partida;
     questionActual: Question;
     questionIndex: number;
+    leftTimeQuestion: number;
     
     init: boolean;
     finish: boolean;
@@ -18,7 +19,7 @@ export class PartidaState implements IPartidaState{
     partidaActual: Partida;
     questionActual: Question;
     questionIndex: number;
-    
+    leftTimeQuestion: number;
     init: boolean;
     finish: boolean;
 
@@ -29,6 +30,7 @@ export class PartidaState implements IPartidaState{
         this.partidaActual = partida;
         this.questionActual = question;
         this.questionIndex = 0;
+        this.leftTimeQuestion = partida.config.seconds;
         this.score = 0;
         this.init = false;
         this.finish = false;
