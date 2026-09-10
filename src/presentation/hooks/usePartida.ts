@@ -14,6 +14,8 @@ export function usePartida() {
     
 
     useEffect(() => {
+        if (!config) return;
+
         const observer: IPartidaObserver = {
             update: (newState: IPartidaState) => {
                 setState({ ...newState });
@@ -44,7 +46,7 @@ export function usePartida() {
             partidaService.unsubscribe(userService);
         }
         
-    }, [partidaService]);
+    }, [partidaService, config]);
     
     const responder = (opcionSeleccionada: string) : string => {
         return partidaService.anwered(opcionSeleccionada);
