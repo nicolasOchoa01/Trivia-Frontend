@@ -14,7 +14,7 @@ export class PartidaService implements IPartidaService {
     private readonly _history: IHistoryService;
     private readonly _user: IUserService;
     private _state!: IPartidaState;
-    private _observer!: IPartidaObserver;
+    private _observers: IPartidaObserver[];
     private _timerInterval: number | null = null;
     private _delay: number = 1000;
 
@@ -22,6 +22,7 @@ export class PartidaService implements IPartidaService {
         this._repository = repository;
         this._history = history;
         this._user = user;
+        this._observers = [];
     }
     
 
@@ -165,16 +166,16 @@ export class PartidaService implements IPartidaService {
     }
 
     suscribe(observer: IPartidaObserver): void {
-        this._observer = observer;
+        this._observers.push(observer);
     }
 
     unsubscribe(observer: IPartidaObserver): void {
         console.log("unsubscribe", observer);
-        this._observer = null!;
+        this._observers = this._observers.filter((o) => o !== observer);
     }
 
     notify(): void {
-        this._observer!.update(this._state);
+        this._observers.forEach((observer) => observer.update(this._state));
     }
 
 }

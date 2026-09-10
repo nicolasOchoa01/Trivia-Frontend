@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDependencies } from '../../hooks/useDependencies';
 import { useAuth } from '../../hooks/useAuth';
+import { useEffect, useState } from 'react';
+import type { IUserObserver } from '../../../application/interfaces/IUserObserver';
 
 export function AsideComponent() {
     const navigate = useNavigate();
@@ -8,7 +10,25 @@ export function AsideComponent() {
     const { userService } = useDependencies();
     const { logout } = useAuth();
 
-    const user = userService.getUser();
+
+
+    const [user, setUser] = useState(userService.getUser());
+        
+    useEffect(() => {
+        const observer: IUserObserver = {
+            update: updatedUser => {
+                setUser({ ...updatedUser });
+                console.log("updateando user aside");
+            }
+        };
+        userService.subscribe(observer);
+        console.log("suscribiendo aside");
+
+        return () => {
+            userService.unsubscribe(observer);
+            console.log("unsuscribiendo aside");
+        };
+    }, [userService]);
 
     const handleQuickStart = async () => {
         try {

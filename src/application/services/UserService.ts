@@ -1,15 +1,22 @@
 import { type User } from "../../domain/entities/User";
+import type { IPartidaObserver } from "../interfaces/IPartidaObserver";
+import type { IPartidaState } from "../interfaces/IPartidaState";
+import type { IUserObserver } from "../interfaces/IUserObserver";
 import { type IUserService } from "../interfaces/IUserService";
 import type { Login } from "../models/Login";
 import type { Register } from "../models/Register";
 import { type IUserRepository } from "../ports/IUserRepository";
 
-export class UserService implements IUserService {
+export class UserService implements IUserService, IPartidaObserver {
     private readonly _repository: IUserRepository;
+    private _observers: IUserObserver[];
 
     constructor(repository: IUserRepository){
         this._repository = repository;
+        this._observers = [];
     }
+    
+    
     getUser(): User {
         const storedUser = localStorage.getItem("currentUser");
         if (!storedUser) {
@@ -115,5 +122,30 @@ export class UserService implements IUserService {
     }
     async getAllUsers(): Promise<User[]> {
         return await this._repository.getAllUsers();
+    }
+
+    updateUser(user: User): void {
+        localStorage.setItem("currentUser", JSON.stringify(user));
+    }
+
+    update(state: IPartidaState): void {
+        if(state.finish){
+            const obtenerUser = async () =>  {
+                const user = await this.getUserById(this.getUser().id);
+                this.updateUser(user);
+                this.notify();
+            }
+            obtenerUser();
+        }  
+    }
+
+    subscribe(observer: IUserObserver): void {
+        this._observers.push(observer);
+    }
+    unsubscribe(observer: IUserObserver): void {
+        this._observers = this._observers.filter(o => o !== observer);
+    }
+    notify(): void {
+        this._observers.forEach(observer => observer.update(this.getUser()));
     }
 }

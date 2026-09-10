@@ -5,9 +5,9 @@ import type { Login } from "../../../application/models/Login";
 
 
 export class UserRepositoryApi implements IUserRepository {
-    async getUserById(id: string): Promise<User> {
+    async getUserById(userId: string): Promise<User> {
         const apiUrl = import.meta.env.API_URL || "https://localhost:7126";
-        const response = await fetch(`${apiUrl}/api/User/${id}`);
+        const response = await fetch(`${apiUrl}/api/User/${userId}`);
         if (!response.ok) {
             throw new Error(`Error fetching user by ID: ${response.statusText}`);
         }

@@ -6,7 +6,7 @@ import type { Config } from "../../domain/entities/Config";
 import { useLocation } from "react-router-dom";
 
 export function usePartida() {
-    const { partidaService } = useDependencies();
+    const { partidaService, userService } = useDependencies();
     const location = useLocation();
     const config: Config = location.state.config;
     const [state, setState] = useState<IPartidaState | null>(null);
@@ -20,6 +20,7 @@ export function usePartida() {
             }
         };
         partidaService.suscribe(observer);
+        partidaService.suscribe(userService);
 
         const iniciarJuego = async () => {
             try {
@@ -40,7 +41,7 @@ export function usePartida() {
         return () => {
             partidaService.endPartida();
             partidaService.unsubscribe(observer);
-            
+            partidaService.unsubscribe(userService);
         }
         
     }, [partidaService]);
