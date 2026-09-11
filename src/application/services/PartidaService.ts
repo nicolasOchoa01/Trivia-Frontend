@@ -49,7 +49,8 @@ export class PartidaService implements IPartidaService {
     }
     
     revolverOptions(): void {
-        //revolver las opciones de cada pregunta
+        if(!this._state.partidaActual.config.multipleChoice)
+            return;
         this._state.partidaActual.questions.forEach((question) => {
             const shuffledOptions = [...question.options];
             for (let i = shuffledOptions.length - 1; i > 0; i--) {

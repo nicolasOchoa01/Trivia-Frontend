@@ -10,8 +10,10 @@ export function PartidaPage() {
     loading, 
     isFinished, 
     leftTimeQuestion, 
+    multipleChoice,
     timer,    
-    seconds,   
+    seconds,
+       
     responder 
   } = usePartida();
 
@@ -55,6 +57,20 @@ const handleAnswerClick = (option: string) => {
     }, 1400);
   };
 
+  const handleMostrarRespuestaYContinuar = () => {
+    if (showFeedback) return;
+
+    setIsCorrect(true);
+    setShowFeedback(true);
+
+    responder("");
+
+    setTimeout(() => {
+      setIsCorrect(null);
+      setShowFeedback(false);
+    }, 1400); 
+  };
+
   const porcentajeTiempo = seconds ? (leftTimeQuestion / seconds) * 100 : 100;
 
   return (
@@ -94,34 +110,67 @@ const handleAnswerClick = (option: string) => {
           {preguntaActual?.question}
         </h2>
 
-        <div className="flex flex-col gap-3">
-          {preguntaActual?.options.map((option, index) => {
-            let buttonStyle = "bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700";
+        {multipleChoice ? (
+          <div className="flex flex-col gap-3">
+            {preguntaActual?.options.map((option, index) => {
+              let buttonStyle = "bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700";
 
-            if (showFeedback) {
-              if (option === preguntaActual.answer) {
-                buttonStyle = "bg-green-600 text-white border-green-500 shadow-lg shadow-green-900/50 scale-[1.02]";
-              } else if (option === selectedOption && !isCorrect) {
-                buttonStyle = "bg-red-600 text-white border-red-500 shadow-lg shadow-red-900/50 animate-shake";
-              } else {
-                buttonStyle = "opacity-50 bg-slate-800 text-slate-400 border-slate-800";
+              if (showFeedback) {
+                if (option === preguntaActual.answer) {
+                  buttonStyle = "bg-green-600 text-white border-green-500 shadow-lg shadow-green-900/50 scale-[1.02]";
+                } else if (option === selectedOption && !isCorrect) {
+                  buttonStyle = "bg-red-600 text-white border-red-500 shadow-lg shadow-red-900/50 animate-shake";
+                } else {
+                  buttonStyle = "opacity-50 bg-slate-800 text-slate-400 border-slate-800";
+                }
               }
-            }
 
-            return (
+              return (
+                <button
+                  key={index}
+                  disabled={showFeedback}
+                  onClick={() => handleAnswerClick(option)}
+                  className={`p-4 font-medium rounded-xl border transition-all cursor-pointer flex items-center justify-between ${buttonStyle}`}
+                >
+                  <span>{option}</span>
+                  {showFeedback && option === preguntaActual.answer && <span>✅</span>}
+                  {showFeedback && option === selectedOption && !isCorrect && <span>❌</span>}
+                </button>
+              );
+            })}
+          </div>
+        ) : (
+
+          <div className="flex flex-col gap-4">
+            {showFeedback ? (
+              <div className="p-4 bg-slate-800 border border-green-500/50 rounded-xl text-center">
+                <p className="text-xs text-slate-400 mb-1">Respuesta Correcta:</p>
+                <p className="text-lg font-bold text-green-400">✨ {preguntaActual?.answer}</p>
+              </div>
+            ) : (
+              <div className="p-6 bg-slate-800/50 border border-slate-800 rounded-xl text-center text-slate-400 text-sm">
+                
+              </div>
+            )}
+
+            {!showFeedback ? (
               <button
-                key={index}
-                disabled={showFeedback}
-                onClick={() => handleAnswerClick(option)}
-                className={`p-4 font-medium rounded-xl border transition-all cursor-pointer flex items-center justify-between ${buttonStyle}`}
+                onClick={handleMostrarRespuestaYContinuar}
+                className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 font-semibold rounded-xl transition-all cursor-pointer shadow-lg shadow-indigo-900/30"
               >
-                <span>{option}</span>
-                {showFeedback && option === preguntaActual.answer && <span>✅</span>}
-                {showFeedback && option === selectedOption && !isCorrect && <span>❌</span>}
+                Ver Respuesta Correcta 👁️
               </button>
-            );
-          })}
-        </div>
+            ) : (
+              <button
+                onClick={handleMostrarRespuestaYContinuar}
+                className="w-full py-4 bg-green-600 hover:bg-green-500 font-semibold rounded-xl transition-all cursor-pointer shadow-lg shadow-green-900/30 animate-fade-in"
+              >
+                Siguiente Pregunta ➡️
+              </button>
+            )}
+          </div>
+        )}
+
       </div>
     </div>
   );

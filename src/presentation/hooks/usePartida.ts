@@ -52,8 +52,6 @@ export function usePartida() {
         return partidaService.anwered(opcionSeleccionada);
     };
 
-    
-
     return {
         preguntaActual: state?.questionActual || null,
         currentIndex: state?.questionIndex ?? 0,
@@ -61,6 +59,7 @@ export function usePartida() {
         score: state?.score || 0,
         loading,
         isFinished: state?.finish || false,
+        multipleChoice: state?.partidaActual.config.multipleChoice,
         timer: config.timer,
         seconds: config.seconds,
         leftTimeQuestion: state?.leftTimeQuestion || 0,
